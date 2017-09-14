@@ -1,0 +1,32 @@
+BYOD
+
+QUICK START terminal
+
+Starts VM anad runs docker in that VM
+
+docker ps
+
+docker images
+
+#running without dockerfile
+https://hub.docker.com/r/tutum/hello-world/
+
+docker pull tutum/hello-world
+
+docker run hello-world
+
+#OPEN new window
+
+docker ps
+
+docker stop <image_name>
+
+docker ps -a
+
+docker rm <image_name>
+
+docker run -p 80:80 --name ferdi tutum/hello-world
+
+docker exec -it 
+
+#running with dockerfile
