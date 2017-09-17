@@ -6,18 +6,18 @@ import {
 } from 'graphql';
 
 const dummyTags = {
-    0: "docker",
-    1:  "rain"
+    0: {tag: "docker"},
+    1:  {tag: "rain"}
 }
 
 const dummyData = {
     0: {
-        tag: [dummyTags[0], dummyTags[1]],
+        tag: [0,1],
         title: "how to Life",
         body: "Resign"
     },
     1: {
-        tag: [dummyTags[1]],
+        tag: [1],
         title: "how to Raise",
         body: "Resign"
     }
@@ -34,7 +34,8 @@ const NoteType = new GraphQLObjectType({
             type: GraphQLString
         },
         tag: {
-            type: new GraphQLList(TagType)
+            type: new GraphQLList(GraphQLString),
+            resolve: note => note.tag.map(idx => dummyTags[idx].tag)
         }
     })
 });

@@ -2,8 +2,6 @@ import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import schema from './schema';
 
-var root = { hello: () => 'Hello world!' };
-
 var app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
