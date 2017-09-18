@@ -4,7 +4,6 @@ MAINTAINER Mark Ronald Delos Santos (markrdelossantos@hotmail.com)
 ADD package.json /tmp/package.json
 RUN mkdir /app
 RUN cd /tmp && npm install
-RUN cd /tmp && echo $(ls) 
 RUN cp -a /tmp/node_modules/ /app/node_modules/
 
 RUN npm install --global nodemon

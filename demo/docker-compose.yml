@@ -1,18 +1,28 @@
 version: '2'
 services:
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #    - "8080:8080"
-  #   volumes:
-  #      - ./frontend:/app
-  #      - /app/node_modules
+  frontend:
+    build: ./frontend
+    ports:
+     - "9500:9500"
+    volumes:
+       - ./frontend:/app
+       - /app/node_modules
   backend:
     build: ./backend
     ports:
-     - "3000:3000"
+      - "3000:3000"
     volumes:
        - ./backend:/app
        - /app/node_modules
   redis:
     image: redis:3.2.5-alpine
+  nginx:
+    build:
+      context: nginx
+    links:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/conf:ro

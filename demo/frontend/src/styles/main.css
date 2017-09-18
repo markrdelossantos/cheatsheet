@@ -1,0 +1,31 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-family: "Titillium Web";
+    overflow: auto;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#627d4d+0,1f3b08+100;Olive+3D */
+    background: #004D40; /* Old browsers */
+    background: -moz-linear-gradient(top, #004D40 0%, #2E7D32 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #004D40 0%,#2E7D32 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #004D40 0%,#2E7D32 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004D40', endColorstr='#2E7D32',GradientType=0 ); /* IE6-9 */
+}
+
+.centeredText {
+    text-align: center;
+}
+
+.quarterWindow {
+    height: 10vh;
+    clear: both;
+}
+
+#app_main {
+    height: 100vh;
+}
+
+pre {
+    margin-top: 0em;
+}
