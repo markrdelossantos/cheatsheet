@@ -50,6 +50,7 @@ const TagType = new GraphQLObjectType({
     })
 });
 
+
 const QueryType = new GraphQLObjectType({
     name: 'Query',
     description: '...',
@@ -59,7 +60,12 @@ const QueryType = new GraphQLObjectType({
             args: {
                 id: {type: GraphQLString}
             },
-            resolve: (root, args) => dummyData[args.id]
+            resolve: (root, args) => {
+                const fkPromise = new Promise((resolve)=>{   
+                    setTimeout(()=> resolve(), 5000);
+                });
+                return fkPromise.then(()=>{return dummyData[args.id]});
+            }
         },
         tag: {
             type: TagType,

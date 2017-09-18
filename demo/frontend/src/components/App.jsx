@@ -20,6 +20,7 @@ export default class App extends React.Component {
         }
 
         const networkInterface = createNetworkInterface({
+            // TODO:
             uri: "http://192.168.99.100/graphql"
         });
 
@@ -44,8 +45,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        const SearchResultWithData = this.state.query ? graphql(this.state.query)(SearchResult) 
-                        : () => { return false };
+        const SearchResultWithData = this.state.query ? graphql(this.state.query)(SearchResult) : () => { return false };
 
         return (
             <MuiThemeProvider>

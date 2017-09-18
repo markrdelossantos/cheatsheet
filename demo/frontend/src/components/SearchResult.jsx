@@ -6,6 +6,10 @@ import styles from "../styles/main.style.js";
 
 export default class SearchResult extends React.Component {
 
+    componentWillReceiveProps(nextProps) {
+        console.log("eyyyy");
+    }
+
     generateContent(note) {
         const tags = note.tag.map( (tag) => {
             return (<div>{tag}</div>);
