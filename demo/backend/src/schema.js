@@ -5,23 +5,7 @@ import {
     GraphQLList
 } from 'graphql';
 
-const dummyTags = {
-    0: {tag: "docker"},
-    1:  {tag: "rain"}
-}
-
-const dummyData = {
-    0: {
-        tag: [0,1],
-        title: "how to Life",
-        body: "Resign"
-    },
-    1: {
-        tag: [1],
-        title: "how to Raise",
-        body: "Resign"
-    }
-}
+import {getNoteByQuery} from "./dbUtils";
 
 const NoteType = new GraphQLObjectType({
     name: 'Note',
@@ -32,24 +16,19 @@ const NoteType = new GraphQLObjectType({
         },
         body: {
             type: GraphQLString
-        },
-        tag: {
-            type: new GraphQLList(GraphQLString),
-            resolve: note => note.tag.map(idx => dummyTags[idx].tag)
         }
     })
 });
 
-const TagType = new GraphQLObjectType({
-    name: 'Tag',
-    description: 'A certain category of notes',
-    fields: () => ({
-        tag: {
-            type: GraphQLString,
-        }
-    })
-});
-
+// const TagType = new GraphQLObjectType({
+//     name: 'Tag',
+//     description: 'A certain category of notes',
+//     fields: () => ({
+//         tag: {
+//             type: GraphQLString,
+//         }
+//     })
+// });
 
 const QueryType = new GraphQLObjectType({
     name: 'Query',
@@ -58,23 +37,9 @@ const QueryType = new GraphQLObjectType({
         note: {
             type: NoteType,
             args: {
-                id: {type: GraphQLString}
+                tagQuery: {type: GraphQLString}
             },
-            resolve: (root, args) => {
-                const fkPromise = new Promise((resolve)=>{   
-                    setTimeout(()=> resolve(), 5000);
-                });
-                return fkPromise.then(()=>{return dummyData[args.id]});
-            }
-        },
-        tag: {
-            type: TagType,
-            args: {
-                id: {
-                    type: GraphQLString
-                }
-            },
-            resolve: (root, args) => dummyTags[args.id]
+            resolve: (root, args) => {return getNoteByQuery(args.tagQuery)}
         }
     })
 
