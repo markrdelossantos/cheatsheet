@@ -37,7 +37,7 @@ const QueryType = new GraphQLObjectType({
         note: {
             type: NoteType,
             args: {
-                tagQuery: {type: GraphQLString}
+                tagQuery: {type: new GraphQLList(GraphQLString)}
             },
             resolve: (root, args) => {return getNoteByQuery(args.tagQuery)}
         }

@@ -45,28 +45,44 @@ const saveToDB = (rawNote, user) => {
 }
 
 // All below returns promises
-const getNoteFromId = (tagId) => {
+const getNoteFromId = (noteId) => {
+    
+    if(noteId.length === 0) {
+        console.log("Empty array...");
+        return noteId;
+    }
+
     const hGetAllClient = promisify(redisClient.hgetall, redisClient);
     // merge these promises
-    return hGetAllClient(tagId).then((result) => {
+    return hGetAllClient(noteId).then((result) => {
+        // result["foundIn"] = "test";
         return result;
     })
     .catch((err) => console.log(err));
 };
 
-const getNoteByQuery = (tagQuery,user = "all") => {
-    var user_domain;
+const getNoteByQuery = (tagQuery, user = "all", operation = "and") => {
+    var user_domains = [];
     if(user === "all") {
-        user_domain = "public_notes";
+        user_domains.push("public_notes");
+    }
+    user_domains.push(`${user}_notes`);
+
+    var dbOperation;
+    if(operation === "and") {
+        dbOperation =  redisClient.sinter;
     }
     else {
-        user_domain = `${user}_notes`;
+        dbOperation = redisClient.sunion;
     }
 
-    const sinterClient = promisify(redisClient.sinter, redisClient);
-    return sinterClient(user_domain, tagQuery).then((result) => {
+    const sinterClient = promisify(dbOperation, redisClient);
+    return sinterClient(tagQuery.push(user_domains)).then((result) => {
+        console.log(tagQuery);
         return getNoteFromId(result);
     }).catch((err) => console.log(err));
+
+    // return Promise.all(promises);
 }
 
 export {saveToDB, getNoteByQuery};

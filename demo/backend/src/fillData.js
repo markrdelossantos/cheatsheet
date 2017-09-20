@@ -30,4 +30,7 @@ export default function fillData() {
     // saveToDB(note2);
     // saveToDB(note3);
     // saveToDB(note4);
+
+    const prmise = getNoteByQuery(["to_watch", "shopping_list"],"all", "or")
+        .then((result) => {console.log(result)});
 }
