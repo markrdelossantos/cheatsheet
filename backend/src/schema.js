@@ -2,7 +2,8 @@ import {
     GraphQLSchema,
     GraphQLObjectType,
     GraphQLString,
-    GraphQLList
+    GraphQLList,
+    GraphQLBoolean
 } from 'graphql';
 
 import {getNoteByQuery} from "./dbUtils";
@@ -20,29 +21,23 @@ const NoteType = new GraphQLObjectType({
     })
 });
 
-// const TagType = new GraphQLObjectType({
-//     name: 'Tag',
-//     description: 'A certain category of notes',
-//     fields: () => ({
-//         tag: {
-//             type: GraphQLString,
-//         }
-//     })
-// });
-
 const QueryType = new GraphQLObjectType({
     name: 'Query',
     description: '...',
     fields: () => ({
         note: {
-            type: NoteType,
+            type: new GraphQLList(NoteType),
             args: {
-                tagQuery: {type: new GraphQLList(GraphQLString)}
+                tagQuery: {type: new GraphQLList(GraphQLString)},
+                operation: {type: GraphQLString},
+                user: {type: GraphQLString}, // TODO should be context
+                includePublic: {type: GraphQLBoolean},
             },
-            resolve: (root, args) => {return getNoteByQuery(args.tagQuery)}
+            resolve: (root, args, ctx) => {
+                return getNoteByQuery(args.tagQuery, args.operation, args.user, args.includePublic);
+            }
         }
     })
-
 })
 
 export default new GraphQLSchema({
